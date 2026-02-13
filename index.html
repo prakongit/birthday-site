@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Birthday kirkiri anayaaaa jiiii🎉</title>
+<title>Happy Birthday 🎉</title>
 
 <style>
 body{
@@ -33,19 +33,6 @@ h1{
   min-height:120px;
 }
 
-.gallery{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:10px;
-  margin-top:20px;
-}
-
-.gallery img{
-  width:100%;
-  border-radius:16px;
-  box-shadow:0 0 12px rgba(0,0,0,0.35);
-}
-
 button{
   padding:14px 22px;
   font-size:5vw;
@@ -54,30 +41,64 @@ button{
   background:white;
   color:#333;
   margin-top:20px;
+  box-shadow:0 6px 18px rgba(0,0,0,.25);
 }
 
-.footer{
-  margin:30px 10px;
-  font-size:4vw;
-  opacity:0.9;
+button:active{
+  transform:scale(.96);
+}
+
+/* Gallery */
+
+#memTitle{
+  display:none;
+  opacity:0;
+  transition:.6s;
+}
+
+.gallery{
+  display:none;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+  margin-top:15px;
+  opacity:0;
+  transform:translateY(20px);
+  transition:.6s;
+}
+
+.gallery.show{
+  display:grid;
+  opacity:1;
+  transform:translateY(0);
+}
+
+.gallery img{
+  width:100%;
+  border-radius:16px;
+  box-shadow:0 0 12px rgba(0,0,0,0.35);
 }
 
 /* balloons */
+
 .balloon{
   position:fixed;
   bottom:-120px;
   width:40px;
   height:55px;
   border-radius:50%;
-  opacity:.8;
+  opacity:.85;
   animation: floatUp linear infinite;
   z-index:1;
 }
 
 @keyframes floatUp{
-  to{
-    transform:translateY(-120vh);
-  }
+  to{ transform:translateY(-120vh); }
+}
+
+.footer{
+  margin:30px 10px;
+  font-size:4vw;
+  opacity:0.9;
 }
 
 canvas{
@@ -92,7 +113,6 @@ canvas{
 
 <body>
 
-<!-- music -->
 <audio autoplay loop>
 <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3?filename=happy-birthday-254480.mp3">
 </audio>
@@ -105,11 +125,11 @@ canvas{
 
 <div id="typeMsg"></div>
 
-<button onclick="burst()">Tap for Extra Surprise 🎁</button>
+<button onclick="unlockMemories()">Unlock Memories 🎁</button>
 
-<h2>Memory Lane 📸</h2>
+<h2 id="memTitle">Memory Lane 📸</h2>
 
-<div class="gallery">
+<div class="gallery" id="gallery">
 <img src="photo1.jpg">
 <img src="photo2.jpg">
 <img src="photo3.jpg">
@@ -117,20 +137,23 @@ canvas{
 </div>
 
 <div class="footer">
-Made with full effort + thoda sa extra pyaar 😄
+Made with effort + thoda sa extra pyaar 😄
 </div>
 
 </div>
 
 <script>
-/* ========== TYPING MESSAGE ========== */
+/* ========= TYPING MESSAGE ========= */
 
-const text = `You are one year older… but still same level of adorable crazy 🤭
+const text = `You are officially one year older…
+but still same level of adorable crazy 🤭
 
-May your day be full of cake attacks, loud laughs,
-random surprises, and real smiles ❤️
+May your day be full of cake attacks,
+loud laughs, random surprises,
+and real smiles ❤️
 
-Stay cute. Stay weird. Stay special.😌`;
+Stay cute. Stay weird. Stay special.
+And okay… just a little bit mine 😌`;
 
 let i=0;
 function type(){
@@ -142,15 +165,15 @@ function type(){
 }
 type();
 
-/* ========== CONFETTI ========== */
+/* ========= CONFETTI ========= */
 
-const canvas = document.getElementById("confetti");
-const ctx = canvas.getContext("2d");
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+const canvas=document.getElementById("confetti");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
 
 let pieces=[];
-for(let i=0;i<180;i++){
+for(let i=0;i<160;i++){
   pieces.push({
     x:Math.random()*canvas.width,
     y:Math.random()*canvas.height,
@@ -183,7 +206,7 @@ function update(){
 setInterval(draw,20);
 
 function burst(){
-  for(let i=0;i<40;i++){
+  for(let i=0;i<50;i++){
     pieces.push({
       x:window.innerWidth/2,
       y:window.innerHeight/2,
@@ -194,7 +217,20 @@ function burst(){
   }
 }
 
-/* ========== BALLOONS ========== */
+/* ========= MEMORY UNLOCK ========= */
+
+function unlockMemories(){
+  const g=document.getElementById("gallery");
+  const t=document.getElementById("memTitle");
+
+  g.classList.add("show");
+  t.style.display="block";
+  setTimeout(()=> t.style.opacity=1,50);
+
+  burst();
+}
+
+/* ========= BALLOONS ========= */
 
 function makeBalloon(){
   const b=document.createElement("div");
@@ -216,5 +252,3 @@ window.addEventListener("resize",()=>{
 
 </body>
 </html>
-
-
